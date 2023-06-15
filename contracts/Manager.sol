@@ -1,11 +1,26 @@
 pragma solidity ^0.8.20;
 
-import "@0x/contracts-erc20/contracts/src/ERC20Token.sol";
-
+interface Achievements {
+    function claimAchievement(uint256 id, address user) external;
+}
 
 contract Manager {
+    address owner;
+    Achievements achievement;
 
-    constructor () public {}
+    modifier isOwner {
+        require(msg.sender == owner);
+        _;
+    }
 
-    isPoolOwner(_address: address) isOwner
+    constructor ()  {owner = msg.sender;}
+
+    function isPoolOwner(address _address) isOwner public {
+        achievement.claimAchievement(id, user);
+    }
+
+    function setAchievementsContract(address achievementContract) public isOwner {
+        achievement = Achievements(achievementContract);
+    }
+
 }

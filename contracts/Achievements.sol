@@ -1,7 +1,5 @@
 pragma solidity ^0.8.20;
 
-import "@0x/contracts-erc20/contracts/src/ERC20Token.sol";
-
 contract Achievements {
     address owner;
     address manager;
@@ -9,26 +7,25 @@ contract Achievements {
     Achievement[] public achievements;
     mapping (uint256 => address) public usersAchievements;
 
-    constructor () public {}
+    constructor () {owner = msg.sender;}
 
     modifier isOwner {
         require(msg.sender == owner);
         _;
     }
 
-    
     modifier isManager {
         require(msg.sender == manager);
         _;
     }
 
-    function createAchievement(string name, string description, string reward) public isOwner {
-        achievements[len(achievements)] = Achievement(name, description, reward);
+    function createAchievement(string memory name, string memory description, string memory reward) public isOwner {
+        achievements.push(Achievement(achievements.length, name, description, reward));
     }
 
     function claimAchievement(uint256 id, address user) isManager public {}
 
-    function setManager(address _address) isOwner {
+    function setManager(address _address) isOwner public {
         manager = _address;
     }
 
