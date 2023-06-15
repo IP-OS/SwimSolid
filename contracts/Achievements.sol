@@ -6,7 +6,7 @@ contract Achievements {
     address owner;
     address manager;
 
-    mapping (uint256 => Achievement) public achievements;
+    Achievement[] public achievements;
     mapping (uint256 => address) public usersAchievements;
 
     constructor () public {}
@@ -33,6 +33,7 @@ contract Achievements {
     }
 
     struct Achievement{
+        uint256 id;
         string name;
         string description;
         string reward;
