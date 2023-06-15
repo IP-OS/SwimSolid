@@ -1,14 +1,13 @@
 pragma solidity ^0.8.20;
 
 import "@0x/contracts-erc20/contracts/src/ERC20Token.sol";
-import "Achievement.sol";
 
-contract Achievements is ERC20Token {
+contract Achievements {
     address owner;
     address manager;
 
-    mapping achievements(uint256 => Achivement) public;
-    mapping usersAchievements(uint256 => address) public;
+    mapping (uint256 => Achievement) public achievements;
+    mapping (uint256 => address) public usersAchievements;
 
     constructor () public {}
 
@@ -23,12 +22,20 @@ contract Achievements is ERC20Token {
         _;
     }
 
-    createAchievement(name: string, description: string, reward: string)
+    function createAchievement(string name, string description, string reward) public isOwner {
+        achievements[len(achievements)] = Achievement(name, description, reward);
+    }
 
-    claimAchievement(id:uint256, user:address) isManager
+    function claimAchievement(uint256 id, address user) isManager public {}
 
-    setManager(_address: address) isOwner {
-        manager = _address
+    function setManager(address _address) isOwner {
+        manager = _address;
+    }
+
+    struct Achievement{
+        string name;
+        string description;
+        string reward;
     }
 
 }

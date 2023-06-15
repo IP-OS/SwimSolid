@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.8.20;
 
 import "./interfaces/IERC20Token.sol";
 
