@@ -16,7 +16,7 @@ contract Manager {
     constructor ()  {owner = msg.sender;}
 
     function isPoolOwner(address _address) isOwner public {
-        achievement.claimAchievement(id, user);
+        achievement.claimAchievement(0, _address);
     }
 
     function setAchievementsContract(address achievementContract) public isOwner {

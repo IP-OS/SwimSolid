@@ -5,7 +5,7 @@ contract Achievements {
     address manager;
 
     Achievement[] public achievements;
-    mapping (uint256 => address) public usersAchievements;
+    mapping (uint256 => address[]) public usersAchievements;
 
     constructor () {owner = msg.sender;}
 
@@ -23,7 +23,9 @@ contract Achievements {
         achievements.push(Achievement(achievements.length, name, description, reward));
     }
 
-    function claimAchievement(uint256 id, address user) isManager public {}
+    function claimAchievement(uint256 id, address user) isManager public {
+       usersAchievements[id].push(address);
+    }
 
     function setManager(address _address) isOwner public {
         manager = _address;
