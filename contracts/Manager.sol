@@ -1,5 +1,8 @@
 pragma solidity ^0.8.20;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+
 interface Achievements {
     function claimAchievement(uint256 id, address user) external;
 }
@@ -13,14 +16,16 @@ contract Manager {
         _;
     }
 
-    constructor ()  {owner = msg.sender;}
-
-    function isPoolOwner(address _address) isOwner public {
-        achievement.claimAchievement(0, _address);
+    constructor (address achievementContract)  {
+        owner = msg.sender;
+        achievement = Achievements(achievementContract);
     }
 
-    function setAchievementsContract(address achievementContract) public isOwner {
-        achievement = Achievements(achievementContract);
+
+
+    function isPoolOwner(address _poolAddress, address _address) public isOwner {
+        require(IERC20(_poolAddress).balanceOf(_address) > 0, "Not a Pool holder");
+        achievement.claimAchievement(0, _address);
     }
 
 }

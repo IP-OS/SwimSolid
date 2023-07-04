@@ -1,11 +1,11 @@
 pragma solidity ^0.8.20;
 
 contract Achievements {
-    address owner;
-    address manager;
+    address public owner;
+    address public manager;
 
     Achievement[] public achievements;
-    mapping (uint256 => address[]) public usersAchievements;
+    mapping (address => uint256[]) public usersAchievements;
 
     constructor () {owner = msg.sender;}
 
@@ -24,11 +24,15 @@ contract Achievements {
     }
 
     function claimAchievement(uint256 id, address user) isManager public {
-       usersAchievements[id].push(address);
+       usersAchievements[user].push(id);
     }
 
     function setManager(address _address) isOwner public {
         manager = _address;
+    }
+
+    function achievementsCount() public view returns (uint256) {
+        return achievements.length;
     }
 
     struct Achievement{
